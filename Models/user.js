@@ -33,13 +33,10 @@ const userSchema=mongoose.Schema({
         ref: "product",
        }],
 });
-
-
 userSchema.pre('save',function(){
-
-    var salt = bcrypt.genSaltSync(10);
-   this.password = bcrypt.hashSync(this.password, salt);
-});
+    var solid= bcrypt.genSaltSync(10);
+   this.password = bcrypt.hashSync(this.password, solid);
+})
 
 var userModel=mongoose.model("User",userSchema);
 module.exports=userModel;

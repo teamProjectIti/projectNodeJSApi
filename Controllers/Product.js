@@ -1,4 +1,4 @@
-const fs = require("fs");
+// const fs = require("fs");
 const productModel = require("../Models/product");
 const sellerModel= require("../Models/seller");
 const bcrypt = require("bcrypt");
@@ -6,10 +6,9 @@ const jwt = require("jsonwebtoken");
 const res = require("express/lib/response");
 
 function findProducts() {
-  var products = productModel.find({});
+  var products = productModel.find({}).populate();
   return products;
 }
-
 function fineOneByName(Name) {
     var product = productModel.findOne({ Name: Name });
     return product;
@@ -20,24 +19,24 @@ function createproduct({ Name, description, photo, price, quantity, createdAt, S
     return product;
   }
 
-  function updateProduct(Name,product) {
-    var newProduct = productModel.findOneAndUpdate({ _Name: Name },product);
+  function updateProduct(id,pid,product) {
+    // var newProduct = productModel.findOneAndUpdate({ _Name: Name },product);
+    // return newProduct;
+    var newProduct = productModel.findOneAndUpdate({ SellerId:id , _id:pid }, product);
     return newProduct;
   }
-  
   function fineOneBySellerName(FirstName) {
     var seller = sellerModel.findOne({ FirstName:FirstName });
     console.log(seller);
-    var products = productModel.find({SellerId : seller._id})//p=>p.SellerId==seller.SellerId)
+    var products = productModel.find({SellerId : seller._id})
     return products;
   }
 
-
-  function removeById(Name)
+  function removeById(id)
   {
-    const result = productModel.deleteOne({ productName: Name });
-    console.log(result);
+    const result = productModel.deleteOne({ SellerId: id });
+    
     return result;
   }
 
-  module.exports = { findProducts, createproduct ,fineOneByName ,updateProduct ,removeById,fineOneBySellerName };
+  module.exports= { findProducts, createproduct ,fineOneByName ,updateProduct ,removeById,fineOneBySellerName };

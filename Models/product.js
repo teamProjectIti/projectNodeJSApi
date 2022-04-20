@@ -8,12 +8,15 @@ const productSchema=mongoose.Schema({
         required:true,
          minlength:3,
          maxlength:200,
+         unique:true,
+         trim:true
         },
     description:{
         type:String,
         maxlength:200,
         minlength:3,
         required:true,
+        trim:true,
     },
     photo:{
         type:String,
@@ -22,6 +25,7 @@ const productSchema=mongoose.Schema({
     price:{
         type:Number,
         required:[true,'must be enter price'],
+        trim:true,
     }, 
     quantity:{
         type:Number,
@@ -29,17 +33,19 @@ const productSchema=mongoose.Schema({
     },
     createdAt:{
         type:Date,
-        default:Date.now
+        default:Date.now,
+        trim:true,
     },
     SellerId: {
         type: mongoose.SchemaTypes.ObjectId,
         ref: "seller",
         required: true,
+        trim:true,
       },
        Users: [{
         type: mongoose.SchemaTypes.ObjectId,
         ref: "user",
-       }],
+       }]
 });
 var productModel=mongoose.model("product",productSchema);
 module.exports=productModel;

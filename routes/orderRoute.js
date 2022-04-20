@@ -3,14 +3,13 @@ const express=require('express');
 var router =express.Router();
 // const fs=require('fs');
 
-const {findOrder,createOrder,updateOrder,fineOne,deleteOrder}=require('../controllers/order')
+const {findOrder,createOrder,updateOrder,fineOne,deleteOrder}=require('../Controllers/orderController')
  
 // httpGet 
 router.get("/",async(req,res,next)=>{
-var data=await findOrder();
+let data=await findOrder();
 res.json(data);
 });
-
 //get user by id
  router.get("/:id", async (req, res, next) => {
   var { id } = req.params;
@@ -20,12 +19,11 @@ res.json(data);
   res.status(201).json(order);
 });
 
-
-router.patch("/:id", async(req, res, next) => {
+router.patch("/:id", (req, res, next) => {
   var { id } = req.params;
-  var order = req.body;
+  var { products } = req.body;
 
-  updateOrder(id, order)
+  updateOrder(id, products)
     .then(() => {
       res.status(200).json({ message: "Order updated successfully" });
     })
@@ -34,18 +32,12 @@ router.patch("/:id", async(req, res, next) => {
     });
 });
 
+//funcation Delete
 router.delete("/:id",async(req, res, next)=>{
   var { id } = req.params;
- var order= await  deleteOrder(id) 
-  res.json(order)
+  await  deleteOrder(id) 
+  res.status(200).json({ message: "Delete successfully" });
 });
 // httpPost
-router.post("/",async(req,res,next)=>{
-
-    var body=req.body;
-   
-  var order=await  createOrder(body);
-    res.json(order);
-});
 
 module.exports=router;  

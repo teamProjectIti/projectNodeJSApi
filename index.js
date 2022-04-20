@@ -18,13 +18,22 @@ const mongoose=require("mongoose");
 //     origin:"*"
 //   }
 // })
-
 //  io.on("connection",()=>{
 //    console.log("connection established")
 //  })
-mongoose.connect("mongodb://localhost:27017/Ecommerce",()=>{
+
+//traditional connection 
+// mongoose.connect("mongodb://localhost:27017/Ecommerce2",()=>{
+//   console.log("conected to db")
+// })
+
+//azza's connection
+const username = "azzabahaa";
+const password = "vNxwKn6KRc_Vst3";
+mongoose.connect(`mongodb+srv://${username}:${password}@cluster0.uqyht.mongodb.net/Ecommerce?retryWrites=true&w=majority`,()=>{
   console.log("conected to db")
 })
+
 
  app.use(express.json()); //middleware
 
@@ -54,13 +63,31 @@ mongoose.connect("mongodb://localhost:27017/Ecommerce",()=>{
 app.listen(4000, () => {
   console.log("app started listening on port 4000");
 });
-const sellerRoutes=require("./routes/seller");
-const orderRoutes=require("./routes/order");
-const productRoutes=require("./routes/Product");
+const sellerRoutes=require("./routes/sellerRout");
+const ProductRoutes=require("./routes/ProductRout");
+const orderRoute=require("./routes/orderRoute");
+const userRoutes=require("./routes/userRoute");
 
 // const UserRoutes=require("./routes/userRoute");
 // app.use("/users",UserRoutes);
-
+app.use("/user",userRoutes);
 app.use("/seller",sellerRoutes);
-app.use("/order",orderRoutes);
-app.use("/product",productRoutes);
+app.use("/product",ProductRoutes);
+app.use("/order",orderRoute);
+
+
+//test data 
+// {
+//   "FirstName": "play",
+//  "LastName": "play",
+
+//  "password":"ok",
+
+//  "Address":"okay",
+
+
+//  "City":"30-4-2020",
+
+//  "products":"30-5-2001"
+
+// }

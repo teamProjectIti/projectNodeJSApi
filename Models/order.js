@@ -15,7 +15,7 @@ const orderSchema=mongoose.Schema({
        USerId: {
         type: mongoose.SchemaTypes.ObjectId,
         ref: "user",
-        required: false,
+        required: true,
       },
       products: [{
         type: mongoose.SchemaTypes.ObjectId,
